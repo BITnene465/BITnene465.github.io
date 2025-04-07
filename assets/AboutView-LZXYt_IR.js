@@ -1,0 +1,1 @@
+import{_ as t,c as n,a as o,o as s}from"./index-Dpkk_3tQ.js";const a={},c={class:"about"};function r(l,e){return s(),n("div",c,e[0]||(e[0]=[o("h1",null,"关于",-1),o("p",null,"这是关于BITnene465的介绍",-1)]))}const u=t(a,[["render",r]]);export{u as default};
