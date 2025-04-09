@@ -5,10 +5,43 @@
     <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BITnene465的个人网站</title>
-    <script type="module" crossorigin src="/assets/index-DxjesfLk.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-CtKohjUx.css">
+
+    <!-- 字体预加载优化 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- 衬线字体 - Noto Serif SC -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&display=swap">
+    
+    <!-- 代码字体 - JetBrains Mono 和 Fira Code -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Fira+Code:wght@400;500&display=swap">
+    
+    <!-- 思源宋体替代方案 -->
+    <link rel="stylesheet" href="https://fonts.font.im/css?family=Noto+Serif+SC:400,500,700">
+    <script type="module" crossorigin src="/assets/index-CEFTXmly.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-4XZ4fauo.css">
   </head>
   <body>
     <div id="app"></div>
+
+    <!-- 引入 canvas-nest.js -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-nest.js@2.0.4/dist/canvas-nest.js"></script>
+    
+    <!-- 配置特效 -->
+    <script type="text/javascript">
+      window.onload = function() {
+        const config = {
+          color: '42,184,131', // 线条颜色，Vue绿色
+          pointColor: '42,184,131', // 点颜色
+          opacity: 0.7, // 透明度
+          count: 99, // 粒子数量
+          zIndex: -1 // 画布层级
+        };
+        
+        // 创建特效
+        const cn = new CanvasNest(document.body, config);
+      }
+    </script>
+
   </body>
 </html>
