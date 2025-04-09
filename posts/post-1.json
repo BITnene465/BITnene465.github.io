@@ -1,0 +1,10 @@
+{
+  "id": "post-1",
+  "title": "Vue.js 入门指南",
+  "date": "2023-06-15",
+  "content": "<h1 id=\"vue-intro\">Vue.js 介绍</h1><p>Vue.js 是一个流行的前端框架，它使构建交互式用户界面变得容易。</p><h2 id=\"vue-features\">Vue.js 主要特性</h2><p>Vue提供了许多强大的特性，如响应式数据绑定、组件化开发模型和灵活的插件系统。</p><h3 id=\"vue-reactivity\">响应式系统</h3><p>Vue的响应式系统会自动追踪JS状态变化并更新DOM。</p><h2 id=\"vue-components\">组件系统</h2><p>组件是Vue应用的核心，它们是可复用的Vue实例，具有自己独立的作用域和生命周期。</p><h3 id=\"vue-props\">Props传递数据</h3><p>使用props将数据从父组件传递到子组件是Vue组件通信的基础。</p>",
+  "summary": "探索Vue.js的基础知识和主要特性，适合前端开发初学者。",
+  "categories": ["编程", "前端"],
+  "keywords": ["Vue", "JavaScript", "前端框架"],
+  "author": "BITnene465"
+}

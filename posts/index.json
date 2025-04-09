@@ -1,0 +1,38 @@
+[
+  {
+    "id": "post-1",
+    "title": "Vue.js 入门指南",
+    "date": "2023-06-15",
+    "summary": "探索Vue.js的基础知识和主要特性，适合前端开发初学者。",
+    "categories": ["编程", "前端"],
+    "keywords": ["Vue", "JavaScript", "前端框架"],
+    "author": "BITnene465"
+  },
+  {
+    "id": "post-2",
+    "title": "TypeScript 类型系统详解",
+    "date": "2023-07-22",
+    "summary": "深入了解TypeScript的类型系统，包括基础类型、接口和泛型。",
+    "categories": ["编程", "前端"],
+    "keywords": ["TypeScript", "JavaScript", "类型系统"],
+    "author": "BITnene465"
+  },
+  {
+    "id": "post-3",
+    "title": "Git基础使用指南",
+    "date": "2023-08-10",
+    "summary": "这篇文章详细介绍了Git的基本用法，包括常用命令、工作流程和实际开发场景中的应用。",
+    "categories": ["版本控制", "Git", "开发工具"],
+    "keywords": ["git", "github", "版本控制", "分支管理"],
+    "author": "BITnene465"
+  },
+  {
+    "id": "post-4",
+    "title": "现代前端工具链概览",
+    "date": "2023-09-05",
+    "summary": "介绍现代前端开发中常用的工具和技术栈。",
+    "categories": ["编程", "前端", "工具"],
+    "keywords": ["前端工具", "Webpack", "Vite", "开发环境"],
+    "author": "BITnene465"
+  }
+]

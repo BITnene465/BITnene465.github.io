@@ -1,0 +1,9 @@
+{
+  "id": "post-2",
+  "title": "TypeScript 类型系统详解",
+  "date": "2023-07-22",
+  "content": "<h1 id=\"ts-intro\">TypeScript 介绍</h1><p>TypeScript 是 JavaScript 的超集，增加了静态类型和其他功能。</p><h2 id=\"ts-basics\">基础类型</h2><p>TypeScript 提供了多种基础类型，如 string, number, boolean 等。</p><h2 id=\"ts-interfaces\">接口</h2><p>接口是TypeScript的核心功能之一，它们允许您定义对象的结构。</p><h3 id=\"ts-optional\">可选属性</h3><p>接口中的属性可以被标记为可选的，使用问号符号。</p><h2 id=\"ts-generics\">泛型</h2><p>泛型允许您创建可重用的组件，这些组件可以与各种类型一起工作。</p>",
+  "summary": "深入了解TypeScript的类型系统，包括基础类型、接口和泛型。",
+  "categories": ["编程", "前端"],
+  "keywords": ["TypeScript", "JavaScript", "类型系统"]
+}

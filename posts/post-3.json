@@ -1,0 +1,10 @@
+{
+  "id": "post-3",
+  "title": "Git基础使用指南",
+  "date": "2023-08-10",
+  "summary": "这篇文章详细介绍了Git的基本用法，包括常用命令、工作流程和实际开发场景中的应用。",
+  "categories": ["版本控制", "Git", "开发工具"],
+  "keywords": ["git", "github", "版本控制", "分支管理"],
+  "author": "BITnene465",
+  "content": "<h1>Git基础使用指南</h1><h2>git workflow</h2><p>git flow 是一种git工作流的范式</p><h2>基础命令</h2><h3>常用命令流程</h3><p>git add → git commit → git push</p><h3>分支类命令</h3><pre><code>git branch       # 查看本地分支\ngit branch -r    # 查看远程分支\ngit branch -a    # 所有分支\ngit checkout &lt;branch_name&gt;  # 切换分支\ngit merge SP2    # 合并分支</code></pre><h3>查看信息类命令</h3><pre><code>git status  # 展示各个文件的状态和对比\ngit log    # 提交日志, hash id 可查</code></pre><h3>git提交步骤</h3><pre><code>git pull    # 先拉远程仓库代码\ngit status  # 查看状态\ngit add ... # 将文件添加到缓存区\ngit commit -m ...  # 先提交到本地\ngit push    # 将本地提交推送到远程仓库</code></pre><h3>Git 提交格式</h3><ul><li>摘要（Summary）和详细描述（Description）</li><li>示例：<code>feat: Add new feature for user authentication</code></li></ul><h2>开发场景示例</h2><h3>本地项目首次上传到GitHub</h3><ol><li>在GitHub创建新仓库</li><li>连接本地仓库与远程仓库: <code>git remote add origin https://github.com/用户名/仓库名.git</code></li><li>推送本地分支: <code>git push -u origin main</code></li></ol><h3>基于main分支创建开发分支</h3><pre><code>git checkout main\ngit checkout -b dev  # 创建并切换到dev分支</code></pre><h3>合并开发分支到main</h3><pre><code>git switch main\ngit pull origin main\ngit merge dev\ngit push origin main</code></pre>"
+}

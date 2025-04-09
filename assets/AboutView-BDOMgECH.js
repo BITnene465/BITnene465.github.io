@@ -1,0 +1,1 @@
+import{_ as o,c as t,a as e,o as s}from"./index-DxjesfLk.js";const l={},a={class:"about"};function c(r,n){return s(),t("div",a,n[0]||(n[0]=[e("h1",null,"关于",-1),e("p",null,"这是关于BITnene465的介绍",-1),e("p",null,"BITnene465是一个热爱编程和技术的个人网站，致力于分享编程知识、技术文章和个人见解。",-1),e("p",null,"感谢你访问BITnene465的个人网站！",-1)]))}const _=o(l,[["render",c]]);export{_ as default};
