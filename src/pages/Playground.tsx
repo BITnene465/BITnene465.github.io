@@ -1,6 +1,9 @@
 import Section from '../components/ui/Section'
 import { motion } from 'framer-motion'
 import { cardHover, cardTransition } from '../lib/motion'
+import { Link } from 'react-router-dom'
+import { buttonVariants } from '../components/ui/Button'
+import { cn } from '../lib/utils'
 
 const animeAndGames = [
   { title: 'Frieren: Beyond Journey’s End', note: 'Meditative pacing, beautiful palettes.' },
@@ -39,6 +42,25 @@ function Playground() {
             </motion.li>
           ))}
         </ul>
+      </Section>
+
+      <Section
+        eyebrow="mini arcade"
+        title="Snake lab"
+        description="A tiny in-browser playground that now lives on its own route."
+      >
+        <div className="space-y-4 rounded-3xl border border-border/30 bg-bg-alt/60 p-6 shadow-soft/20">
+          <p className="text-sm text-text-muted">
+            Launch the dedicated Snake Lab page to play in full focus mode. It ships the same playful styling with room
+            for future challenges, touch controls, and high-score experiments.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Link to="/playground/snake" className={cn(buttonVariants({ size: 'lg' }), 'text-sm')}>
+              Launch Snake lab
+            </Link>
+            <p className="text-xs uppercase tracking-[0.35em] text-text-muted">Arrow keys · WASD · restart anytime</p>
+          </div>
+        </div>
       </Section>
 
       <Section

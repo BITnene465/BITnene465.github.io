@@ -51,6 +51,7 @@ src/
     PostDetail.tsx
     About.tsx
     Playground.tsx
+    SnakeLab.tsx
   data/
     papers.ts         # Paper interface + sample records
     projects.ts       # Project interface + sample records
@@ -68,7 +69,7 @@ Upcoming steps will add `/components/ui` polish, `/components/content` expansion
 
 ## Routing & layout skeleton
 
-- Routing uses `HashRouter` to keep GitHub Pages refreshes from 404ing. Routes are declared in `src/router/index.tsx` and include `/`, `/research`, `/blog`, `/blog/:slug`, `/about`, and `/playground`.
+- Routing uses `HashRouter` to keep GitHub Pages refreshes from 404ing. Routes are declared in `src/router/index.tsx` and include `/`, `/research`, `/blog`, `/blog/:slug`, `/about`, `/playground`, and `/playground/snake` for the dedicated mini arcade.
 - `Layout.tsx` wraps every route via a parent `<Route element={<Layout />}>`. It renders `Navbar`, a spacious content container (`Outlet`), and `Footer`.
 - `Navbar` defines internal links with `NavLink`, highlighting the active route using Tailwind tokens.
 - Home, Research, and About now render live data from the shared `data/` directory so content changes stay centralized.
@@ -82,7 +83,8 @@ Upcoming steps will add `/components/ui` polish, `/components/content` expansion
   - **Research**: overview copy, highlighted papers, yearly publications, and project tiles.
   - **Blog**: intro copy, dynamic tag/type filters, and MDX-backed post cards.
   - **About**: profile narrative, timeline, values, and external links.
-  - **Playground**: anime/game shelf, experiments grid, and tools cloud.
+  - **Playground**: anime/game shelf, experiments grid, tools cloud, and a launcher that links out to the dedicated Snake Lab route.
+  - **Snake Lab**: focused page hosting the interactive snake prototype with room for future arcade experiments.
 - These stubs are now wired to the data layer, so refreshing the JSON-like files updates the UI without touching layout code.
 
 ## Data layer
@@ -129,6 +131,6 @@ Upcoming steps will add `/components/ui` polish, `/components/content` expansion
 5. ✅ MDX pipeline + blog
 6. ✅ Framer Motion transitions
 7. UI polish (buttons, cards, typography)
-8. Playground & blog content enrichments
+8. Playground & blog content enrichments (now underway with the Snake mini-game prototype)
 
 Each step updates this README with fresh instructions and architecture notes so the codebase stays self-explanatory.

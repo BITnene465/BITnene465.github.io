@@ -6,6 +6,7 @@ import Blog from '../pages/Blog'
 import PostDetail from '../pages/PostDetail'
 import About from '../pages/About'
 import Playground from '../pages/Playground'
+import SnakeLab from '../pages/SnakeLab'
 
 function AppRouter() {
   return (
@@ -18,6 +19,7 @@ function AppRouter() {
           <Route path="/blog/:slug" element={<PostDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/playground" element={<Playground />} />
+          <Route path="/playground/snake" element={<SnakeLab />} />
           <Route path="*" element={<Home />} />
         </Route>
       </Routes>
