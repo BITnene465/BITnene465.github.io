@@ -2,7 +2,7 @@
 
 This repository powers a personal academic website that combines a research portfolio, MDX-powered blog, and playful playground experiments. The stack is Vite + React + TypeScript with HashRouter, Tailwind CSS, and Framer Motion for subtle motion cues.
 
-> ✅ Step 2 complete: HashRouter + layout skeleton is online. Navigation now flows through a shared layout with `Navbar`, `Footer`, and placeholder pages.
+> ✅ Step 3 complete: Every main page now has structured sections powered by a reusable `Section` component, ready for real data.
 
 ## Tech stack
 
@@ -60,6 +60,17 @@ Upcoming steps will add `/components/ui`, `/components/content`, `/data`, `/lib`
 - `Navbar` defines internal links with `NavLink`, highlighting the active route using Tailwind tokens.
 - Each page currently returns descriptive placeholder text so we can confirm navigation works before wiring real data.
 
+## Section scaffolding
+
+- `components/ui/Section.tsx` centralizes section titles, descriptions, eyebrow labels, and action slots. It also renders a glassy container for future cards/tables.
+- Pages now follow the expected information architecture:
+  - **Home**: hero block, quick links, recent activity timeline placeholders.
+  - **Research**: overview copy, highlighted papers, yearly publications, and project tiles.
+  - **Blog**: intro copy, tag/type filters, post list placeholders.
+  - **About**: profile narrative, timeline, values, and external links.
+  - **Playground**: anime/game shelf, experiments grid, and tools cloud.
+- These stubs directly map to the upcoming data structures so future steps only need to swap placeholder arrays with real imports.
+
 ## Authoring blog posts (preview)
 
 The blog system lands in Step 5. The workflow is:
@@ -85,7 +96,7 @@ The blog system lands in Step 5. The workflow is:
 
 1. ✅ Tailwind + global styles
 2. ✅ Router + layout skeleton
-3. Home/Research/Blog/About/Playground scaffolding
+3. ✅ Home/Research/Blog/About/Playground scaffolding
 4. Data layer (papers, projects, profile)
 5. MDX pipeline + blog
 6. Framer Motion transitions
