@@ -2,7 +2,7 @@
 
 This repository powers a personal academic website that combines a research portfolio, MDX-powered blog, and playful playground experiments. The stack is Vite + React + TypeScript with HashRouter, Tailwind CSS, and Framer Motion for subtle motion cues.
 
-> ✅ Step 1 complete: Tailwind CSS is wired up with custom tokens that establish the base visual language for the site.
+> ✅ Step 2 complete: HashRouter + layout skeleton is online. Navigation now flows through a shared layout with `Navbar`, `Footer`, and placeholder pages.
 
 ## Tech stack
 
@@ -27,17 +27,38 @@ The dev server runs at `http://localhost:5173`. Tailwind classes are available i
 - Typography: Space Grotesk (sans) and JetBrains Mono (mono) are loaded globally in `src/styles/globals.css`.
 - Utility helpers: `.app-shell`, `.page-wrapper`, `.glass-panel`, and `.text-gradient` provide quick layout primitives while keeping markup lean.
 
-## Directory map (initial draft)
+## Directory map (snapshot)
 
 ```
-
-  App.tsx              # temporary placeholder UI to prove Tailwind wiring
-  main.tsx             # React entry point importing Tailwind globals
+src/
+  App.tsx              # renders <AppRouter />
+  main.tsx             # React entry importing Tailwind globals
+  router/
+    index.tsx          # HashRouter + route table
+  components/
+    layout/
+      Layout.tsx       # Navbar + Outlet + Footer structure
+      Navbar.tsx       # hash-friendly navigation links
+      Footer.tsx       # deployment + ownership blurb
+  pages/
+    Home.tsx
+    Research.tsx
+    Blog.tsx
+    PostDetail.tsx
+    About.tsx
+    Playground.tsx
   styles/
     globals.css        # Tailwind directives + global tokens and helpers
 ```
 
-This structure will expand with `/router`, `/pages`, `/components`, `/data`, `/lib`, and `/posts` as we progress through the implementation checklist.
+Upcoming steps will add `/components/ui`, `/components/content`, `/data`, `/lib`, and `/posts`.
+
+## Routing & layout skeleton
+
+- Routing uses `HashRouter` to keep GitHub Pages refreshes from 404ing. Routes are declared in `src/router/index.tsx` and include `/`, `/research`, `/blog`, `/blog/:slug`, `/about`, and `/playground`.
+- `Layout.tsx` wraps every route via a parent `<Route element={<Layout />}>`. It renders `Navbar`, a spacious content container (`Outlet`), and `Footer`.
+- `Navbar` defines internal links with `NavLink`, highlighting the active route using Tailwind tokens.
+- Each page currently returns descriptive placeholder text so we can confirm navigation works before wiring real data.
 
 ## Authoring blog posts (preview)
 
@@ -63,7 +84,7 @@ The blog system lands in Step 5. The workflow is:
 ## Roadmap / implementation steps
 
 1. ✅ Tailwind + global styles
-2. ⏳ Router + layout skeleton
+2. ✅ Router + layout skeleton
 3. Home/Research/Blog/About/Playground scaffolding
 4. Data layer (papers, projects, profile)
 5. MDX pipeline + blog
