@@ -1,0 +1,346 @@
+你现在扮演一名有产品Sense的资深前端工程师 + 技术文档作者，帮我在现有项目上实现一个个人网站（学术主页 + Blog + Playground），并且在写代码的同时，写好结构清晰的文档。
+
+【一、项目现状】
+
+1. 项目已经用 Vite + React + TypeScript 初始化完毕，目录类似：
+   - public/
+   - src/
+   - index.html
+   - vite.config.ts
+   - package.json
+   - tsconfig*.json
+   - .github/workflows/deploy.yml 已经配置好 GitHub Pages 自动部署
+2. Vite 的 base 设为 '/'，仓库是 `<username>.github.io` 这种形式，对应网址为 `https://<username>.github.io/`。
+3. 你只需要专注于 src/ 下的前端代码和文档设计。
+
+从现在开始，你要根据下面的规范设计整体结构，分步骤给出代码和文档说明，每一步都要告诉我：
+
+- 需要新建/修改哪些文件（包含完整路径）
+- 每个文件的完整内容（放在代码块里）
+- 本次修改的目的和效果
+- 如果有配置或命令行变更，也要明确说明
+
+回答请使用中文说明 + 英文代码。
+
+
+【二、技术栈与约束】
+
+1. 技术栈
+   - Vite
+   - React + TypeScript
+   - React Router v6，使用 HashRouter（避免 GitHub Pages 刷新 404）
+   - Tailwind CSS
+   - Framer Motion（做页面切换和卡片 hover 动画）
+   - Blog 使用 MDX + import.meta.glob 自动收集文章
+2. 要求
+   - 代码使用 TypeScript，组件用函数式写法。
+   - 所有重要数据结构（例如论文、项目、文章 meta）必须有 TS interface/type。
+   - 风格偏简洁科技感，允许适度二次元/动漫/游戏元素，但不能影响信息清晰。
+   - 网站需自适应手机和桌面端，至少保证常见宽度下布局正常。
+   - 动画统一用 Framer Motion 的预设，避免乱七八糟的花里胡哨动画。
+
+
+【三、目标信息架构】
+
+在 src/ 下按照下面结构组织（你可以在实现时微调，但总体需遵守）：
+
+- src/
+  - main.tsx
+  - App.tsx
+  - router/
+    - index.tsx          # 路由与 HashRouter
+  - pages/
+    - Home.tsx
+    - Research.tsx
+    - Blog.tsx           # Blog 列表页
+    - PostDetail.tsx     # 单篇文章页
+    - About.tsx
+    - Playground.tsx
+  - components/
+    - layout/
+      - Layout.tsx       # 统一布局：导航 + Footer + 页面容器
+      - Navbar.tsx
+      - Footer.tsx
+    - ui/
+      - Button.tsx
+      - Card.tsx
+      - Tag.tsx
+      - Section.tsx
+    - content/
+      - Hero.tsx
+      - PaperCard.tsx
+      - PostCard.tsx
+      - ProjectCard.tsx
+  - data/
+    - papers.ts
+    - projects.ts
+    - profile.ts
+  - posts/               # Blog 的 MDX 文件
+    - YYYY-MM-DD-slug.mdx
+  - lib/
+    - mdx.ts             # 负责加载 MDX、生成 PostMeta
+    - motion.ts          # Framer Motion 动画预设
+  - styles/
+    - globals.css        # Tailwind 基础样式 + 全局自定义
+
+路由规则（使用 HashRouter）：
+
+- `/`          → `<Home />`
+- `/research`  → `<Research />`
+- `/blog`      → `<Blog />`
+- `/blog/:slug`→ `<PostDetail />`
+- `/about`     → `<About />`
+- `/playground`→ `<Playground />`
+
+所有页面都通过 `<Layout>` 包裹，Layout 内部负责渲染 `<Navbar>`、`<Footer>` 和带动效的主内容区域。
+
+
+【四、各页面功能与内容要求】
+
+1. Home 页面
+   - Hero 区（单独组件 Hero）：
+     - 左侧：
+       - 显示名字（例：Dr Tan，可先写成占位）
+       - 一句话 tagline（研究方向 + 简短描述）
+       - 2–3 句介绍网站用途的描述
+       - 两个按钮：View Research → /research，Visit Blog → /blog
+     - 右侧：
+       - Avatar / 插画区域（先用渐变背景 + 占位图，预留之后放二次元风插画的位置）
+   - Quick Links 卡片区：
+     - 三张 Card：Research / Blog / Playground
+     - 显示简短标题、描述以及最近几条内容的占位项
+   - Recent Activity：
+     - 列出最近几条更新（可以先用假数据），类型包括 Paper / Blog / Project。
+
+2. Research 页面
+   - 顶部 Research Overview：1–2 段话概括研究方向和核心关注点（文本可先写样例）。
+   - Highlighted Papers：
+     - 使用 PaperCard 组件展示 3–5 篇标记为 highlight 的论文。
+   - All Publications：
+     - 从 data/papers.ts 获取所有论文，按 year 降序按年份分组展示。
+   - Projects：
+     - 使用 ProjectCard 展示若干项目（数据来自 data/projects.ts）。
+
+3. Blog 列表页 `/blog`
+   - 顶部介绍：说明 Blog 包含原创文章、笔记以及外部文章/论文推荐。
+   - 筛选区：
+     - 根据所有 Post 的 tags 自动生成标签列表；
+     - 提供 “All” + 单标签筛选；
+     - 可以再加一个类型筛选：All / Article / Note / Link。
+   - 列表区：
+     - 使用 PostCard 渲染每篇文章：
+       - 标题、日期、标签、类型标记、summary。
+       - type 为 'article' 或 'note' → 点击跳转 `/blog/:slug`。
+       - type 为 'link' → 进入详情页，在详情页提供“打开原文链接”按钮（也可以在卡片上有外链图标）。
+
+4. PostDetail `/blog/:slug`
+   - 根据 slug 从 lib/mdx.ts 中获取对应 PostMeta 和 MDX 组件。
+   - 页面结构：
+     - 头部：标题、日期、类型、tags。
+     - 若 type === 'link'，显示原文链接按钮（新标签页打开 externalUrl）。
+     - 正文：渲染 MDX 内容，限制最大宽度，保证可读性。
+     - 底部：返回 Blog 的链接，必要时可加上一篇/下一篇导航。
+
+5. About 页面
+   - 基本信息：姓名、当前所属机构/职位、研究方向，头像/插画。
+   - 故事/背景：若干段文本介绍学术路径和转折点。
+   - 价值观/原则：用列表形式列出几条“我在研究/工作中看重的东西”，每条一行主句 + 一行解释。
+   - 时间线：使用时间线组件展示重要节点（年份 + 标题 + 简要描述）。
+   - 外部链接：CV（占位地址）、Google Scholar、GitHub、X、Email 等，从 data/profile.ts 中读取。
+
+6. Playground 页面
+   - Anime & Games：
+     - 列出若干动漫/游戏推荐（名称、类型/年份、一句话点评）。
+   - Experiments：
+     - 用 Card 占位，将来放 Web 实验/可视化 Demo。
+   - Tools / Setup：
+     - 列出常用软件和工具（编辑器、终端、笔记工具、常用语言/框架），用 Tag 或列表展示。
+   - 整体风格可以更偏二次元/游戏，但不要影响文字可读性。
+
+
+【五、数据模型要求（TS interface）】
+
+请在实现 data 和 lib/mdx.ts 时使用以下数据结构（可以按需要稍微拓展，但不要减少字段）：
+
+1. 论文数据 `Paper`（data/papers.ts）：
+
+```ts
+export interface Paper {
+  id: string
+  title: string
+  authors: string[]
+  venue: string
+  year: number
+  tags: string[]            // ['selected', 'oral', 'workshop'] 等
+  links?: {
+    pdf?: string
+    code?: string
+    video?: string
+    slides?: string
+  }
+  highlight?: boolean
+  summary?: string
+}
+````
+
+2. 项目数据 `Project`（data/projects.ts）：
+
+```ts
+export interface Project {
+  id: string
+  name: string
+  period?: string           // '2023–2025' 等
+  role?: string             // 'Lead', 'Contributor'
+  description: string
+  tags?: string[]
+  links?: {
+    github?: string
+    demo?: string
+  }
+}
+```
+
+3. 个人信息 `Profile`（data/profile.ts）：
+
+```ts
+export interface Profile {
+  name: string
+  tagline: string
+  bio: string
+  location?: string
+  currentPosition?: string
+  researchAreas: string[]
+  contacts: {
+    email?: string
+    github?: string
+    scholar?: string
+    twitter?: string
+    [key: string]: string | undefined
+  }
+  values: { title: string; description: string }[]
+  timeline: {
+    year: string
+    title: string
+    description?: string
+  }[]
+}
+```
+
+4. Blog 文章 meta `PostMeta`（lib/mdx.ts）：
+
+```ts
+export type PostType = 'article' | 'note' | 'link'
+
+export interface PostMeta {
+  slug: string
+  title: string
+  date: string              // ISO 字符串
+  tags: string[]
+  type: PostType
+  summary?: string
+  externalUrl?: string      // type === 'link' 时必填
+  component: React.ComponentType
+}
+```
+
+MDX 文件 frontmatter 统一格式：
+
+```mdx
+---
+title: "标题"
+date: "2025-11-17"
+tags: ["research", "note"]
+type: "article"       # "article" / "note" / "link"
+summary: "一两句摘要"
+externalUrl: ""       # 仅当 type 为 "link" 时必填
+---
+
+正文内容……
+```
+
+【六、UI 与动画规范】
+
+1. 基本视觉：
+
+   * 整体偏简洁科技感，主色可以使用蓝紫 + 辅色青绿或淡粉，背景可采用深色或中性的浅灰。
+   * 二次元/游戏元素主要出现在：
+
+     * Home 的 Hero 插画区域；
+     * Playground 页面；
+     * 少量 icon 或背景装饰。
+
+2. Tailwind 使用：
+
+   * 在 tailwind.config 中定义基础色 token，如 `bg`, `bg-alt`, `primary`, `primary-soft`, `accent`, `text-main`。
+   * 页面布局常用：
+
+     * 外边距：手机端 `px-4`，桌面 `px-8` 以上；
+     * 内容最大宽度：`max-w-5xl` 或 `max-w-6xl` 居中。
+
+3. 通用组件：
+
+   * Button：
+
+     * 至少支持 `variant="primary"` 和 `variant="ghost"`。
+   * Card：
+
+     * 有圆角、浅阴影和内边距；
+     * hover 使用 Framer Motion 实现轻微上浮 + 放大 + 阴影增强。
+   * Tag：
+
+     * 小圆角标签，用于展示论文/文章/技术标签。
+   * Section：
+
+     * 用于统一每个页面区块的标题 + 描述 + 内容间距。
+
+4. 动画（lib/motion.ts）：
+
+   * 统一定义：
+
+     * `pageTransition`：页面级淡入淡出 + 轻微上下位移。
+     * `cardHover`：卡片 hover 缩放 + 上移。
+   * 页面组件使用 `pageTransition`；
+   * 卡片组件使用 `cardHover`；
+   * 不要自作主张添加过于复杂、旋转、闪烁的动画，也不要做大面积持续运动的背景。
+
+【七、文档要求（重点）】
+
+在写代码的同时，你必须同步维护文档，至少包括：
+
+1. README（或 docs/overview.md）
+
+   * 简要说明项目定位和功能模块。
+   * 如何运行开发环境（npm 命令）。
+   * 如何写一篇新的 Blog：在 src/posts 新建 MDX，填写 frontmatter，push 后由 GitHub Actions 自动部署。
+2. 架构说明（可以在 README 中的单独章节）
+
+   * 描述 src 目录结构与每一层的作用（pages/components/data/lib 等）。
+   * 简要说明 router、MDX 加载、动画预设的设计。
+3. 对于关键模块（如 Blog 系统/lib/mdx.ts、Research 数据/data/papers.ts）：
+
+   * 在文件顶部或 README 中用 5–10 行文字解释它做什么、如何扩展。
+
+输出格式要求：
+
+* 每次回答：
+
+  * 先说明“本次目标”和“整体思路”；
+  * 然后列出【新建/修改的文件列表】；
+  * 接着给出每个文件的完整内容（使用 `ts / `tsx / `mdx / `md 等代码块，并标注文件路径）；
+  * 最后用一个“使用说明/验证方式”小节，告诉我如何在本地运行和验证这一步是否成功。
+* 不要输出和 node_modules 相关的内容，也不要修改 GitHub Actions 文件（除非我明确要求）。
+
+【八、实现顺序】
+
+请严格按下面顺序逐步实现，每一步都给出完整代码和文档增量说明，不要一次性把所有东西全贴出来：
+
+1. 配置 Tailwind + 基本全局样式（确保现有模板能正常使用 Tailwind 类名）。
+2. 实现 Router + Layout + Navbar/Footer 骨架（空页面，但路由正确）。
+3. 搭建 Home / Research / Blog / About / Playground 的基础 Section 结构（只放占位内容）。
+4. 实现 data 层（papers/projects/profile），并让 Home/Research/About 使用假数据渲染。
+5. 配置 MDX + lib/mdx.ts，用 1–2 篇示例文章打通 Blog 列表和详情路由（暂时样式简陋没关系）。
+6. 引入 Framer Motion，添加 Layout 的页面切换动效 + 卡片 hover 动效。
+7. 打磨 UI：统一按钮、卡片、排版，提高可读性和美观度。
+8. 进一步丰富 Playground 和 Blog 示例内容。
+
+从第 1 步开始执行，每完成一步再进入下一步。
