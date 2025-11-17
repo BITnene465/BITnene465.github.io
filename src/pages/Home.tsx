@@ -1,12 +1,18 @@
 import { Link } from 'react-router-dom'
 import Section from '../components/ui/Section'
+import { profile } from '../data/profile'
+import { getHighlightedPapers, papers } from '../data/papers'
+import { projects } from '../data/projects'
+
+const featuredPapers = getHighlightedPapers().slice(0, 3)
+const playgroundPreview = projects.slice(0, 3)
 
 const quickLinks = [
   {
     title: 'Research',
     description: 'Papers, experiments, and collaborators.',
     path: '/research',
-    items: ['Highlights coming soon', 'Datasets & code index', 'Reading list in progress'],
+    items: featuredPapers.map((paper) => paper.title),
   },
   {
     title: 'Blog',
@@ -18,15 +24,34 @@ const quickLinks = [
     title: 'Playground',
     description: 'Small web experiments, anime/game picks, tooling.',
     path: '/playground',
-    items: ['Anime & game shelf', 'WebGL demos', 'Productivity stack'],
+    items: playgroundPreview.map((project) => project.name),
   },
 ]
 
-const recentActivity = [
-  { date: '2025-11-12', type: 'Paper', title: 'Graph-Guided Model Editing (draft)', status: 'Writing outline' },
-  { date: '2025-11-09', type: 'Blog', title: 'Diffusion Simplicity Notes', status: 'MDX skeleton ready' },
-  { date: '2025-11-05', type: 'Project', title: 'Playground Experiments', status: 'Scoping prototypes' },
-]
+type Activity = {
+  date: string
+  type: 'Paper' | 'Project'
+  title: string
+  status: string
+}
+
+const latestPaper = [...papers].sort((a, b) => b.year - a.year)[0]
+const latestProject = playgroundPreview[0]
+
+const recentActivity: Activity[] = [
+  latestPaper && {
+    date: String(latestPaper.year),
+    type: 'Paper' as const,
+    title: latestPaper.title,
+    status: latestPaper.venue,
+  },
+  latestProject && {
+    date: latestProject.period ?? '—',
+    type: 'Project' as const,
+    title: latestProject.name,
+    status: latestProject.description,
+  },
+].filter(Boolean) as Activity[]
 
 function Home() {
   return (
@@ -36,15 +61,11 @@ function Home() {
           <p className="text-xs uppercase tracking-[0.5em] text-accent">home base</p>
           <div className="space-y-4">
             <h1 className="text-4xl font-semibold text-text-main">
-              Dr. Tan — ML systems & creative tooling research.
+              {profile.name} — {profile.tagline}
             </h1>
+            <p className="text-text-muted">{profile.bio}</p>
             <p className="text-text-muted">
-              This space hosts research notes, publication timelines, and playful experiments that
-              connect academic rigor with anime/game-inspired aesthetics.
-            </p>
-            <p className="text-text-muted">
-              Use the quick links to jump into research briefs, MDX blog posts, or the playground where
-              prototypes live.
+              Research areas: {profile.researchAreas.join(' · ')}
             </p>
           </div>
           <div className="flex flex-wrap gap-4">
@@ -104,7 +125,7 @@ function Home() {
       <Section
         eyebrow="updates"
         title="Recent activity"
-        description="Synthetic timeline placeholders showing how updates will be summarized once the data layer is real."
+        description="Auto-generated snippets sourced from the shared papers/projects data layer."
       >
         <div className="space-y-4">
           {recentActivity.map((activity) => (

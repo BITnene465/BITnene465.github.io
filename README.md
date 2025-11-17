@@ -2,7 +2,7 @@
 
 This repository powers a personal academic website that combines a research portfolio, MDX-powered blog, and playful playground experiments. The stack is Vite + React + TypeScript with HashRouter, Tailwind CSS, and Framer Motion for subtle motion cues.
 
-> ✅ Step 3 complete: Every main page now has structured sections powered by a reusable `Section` component, ready for real data.
+> ✅ Step 4 complete: Papers, projects, and the profile data layer now drive Home, Research, and About.
 
 ## Tech stack
 
@@ -40,6 +40,8 @@ src/
       Layout.tsx       # Navbar + Outlet + Footer structure
       Navbar.tsx       # hash-friendly navigation links
       Footer.tsx       # deployment + ownership blurb
+    ui/
+      Section.tsx      # shared section shell
   pages/
     Home.tsx
     Research.tsx
@@ -47,18 +49,22 @@ src/
     PostDetail.tsx
     About.tsx
     Playground.tsx
+  data/
+    papers.ts         # Paper interface + sample records
+    projects.ts       # Project interface + sample records
+    profile.ts        # Profile interface + global bio/value data
   styles/
     globals.css        # Tailwind directives + global tokens and helpers
 ```
 
-Upcoming steps will add `/components/ui`, `/components/content`, `/data`, `/lib`, and `/posts`.
+Upcoming steps will add `/components/content`, `/lib`, and `/posts`.
 
 ## Routing & layout skeleton
 
 - Routing uses `HashRouter` to keep GitHub Pages refreshes from 404ing. Routes are declared in `src/router/index.tsx` and include `/`, `/research`, `/blog`, `/blog/:slug`, `/about`, and `/playground`.
 - `Layout.tsx` wraps every route via a parent `<Route element={<Layout />}>`. It renders `Navbar`, a spacious content container (`Outlet`), and `Footer`.
 - `Navbar` defines internal links with `NavLink`, highlighting the active route using Tailwind tokens.
-- Each page currently returns descriptive placeholder text so we can confirm navigation works before wiring real data.
+- Home, Research, and About now render live data from the shared `data/` directory so content changes stay centralized.
 
 ## Section scaffolding
 
@@ -69,7 +75,14 @@ Upcoming steps will add `/components/ui`, `/components/content`, `/data`, `/lib`
   - **Blog**: intro copy, tag/type filters, post list placeholders.
   - **About**: profile narrative, timeline, values, and external links.
   - **Playground**: anime/game shelf, experiments grid, and tools cloud.
-- These stubs directly map to the upcoming data structures so future steps only need to swap placeholder arrays with real imports.
+- These stubs are now wired to the data layer, so refreshing the JSON-like files updates the UI without touching layout code.
+
+## Data layer
+
+- `src/data/papers.ts` defines the `Paper` interface, an initial `papers` array, and helpers `getHighlightedPapers()` + `groupPapersByYear()` used across Home/Research.
+- `src/data/projects.ts` exposes the `Project` interface and `projects` array. Research and Home cards pull titles, roles, and tags straight from here.
+- `src/data/profile.ts` keeps `Profile` metadata (bio, timeline, values, contacts). Home and About import it for hero copy, research areas, and external links.
+- When adding new entries, keep IDs unique and prefer ISO strings for dates/periods so later filters can sort reliably.
 
 ## Authoring blog posts (preview)
 
@@ -97,7 +110,7 @@ The blog system lands in Step 5. The workflow is:
 1. ✅ Tailwind + global styles
 2. ✅ Router + layout skeleton
 3. ✅ Home/Research/Blog/About/Playground scaffolding
-4. Data layer (papers, projects, profile)
+4. ✅ Data layer (papers, projects, profile)
 5. MDX pipeline + blog
 6. Framer Motion transitions
 7. UI polish (buttons, cards, typography)
