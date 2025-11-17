@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import Section from '../components/ui/Section'
 import PostCard from '../components/content/PostCard'
 import { getAllPosts, getAllTags, type PostType } from '../lib/mdx'
+import Button from '../components/ui/Button'
 
 const posts = getAllPosts()
 const tagFilters = ['all', ...getAllTags()]
@@ -47,18 +48,14 @@ function Blog() {
             <p className="text-xs uppercase tracking-[0.4em] text-text-muted">tags</p>
             <div className="mt-3 flex flex-wrap gap-3">
               {tagFilters.map((tag) => (
-                <button
+                <Button
                   key={tag}
-                  type="button"
+                  variant={activeTag === tag ? 'primary' : 'ghost'}
+                  size="md"
                   onClick={() => setActiveTag(tag)}
-                  className={`rounded-full px-4 py-2 text-sm ${
-                    activeTag === tag
-                      ? 'bg-primary text-bg'
-                      : 'border border-border/40 text-text-muted hover:text-text-main'
-                  }`}
                 >
                   #{tag}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
@@ -66,18 +63,14 @@ function Blog() {
             <p className="text-xs uppercase tracking-[0.4em] text-text-muted">type</p>
             <div className="mt-3 flex flex-wrap gap-3">
               {typeFilters.map((type) => (
-                <button
+                <Button
                   key={type.value}
-                  type="button"
+                  variant={activeType === type.value ? 'soft' : 'ghost'}
+                  size="md"
                   onClick={() => setActiveType(type.value)}
-                  className={`rounded-full px-4 py-2 text-sm ${
-                    activeType === type.value
-                      ? 'bg-accent text-bg'
-                      : 'border border-border/40 text-text-main hover:text-accent'
-                  }`}
                 >
                   {type.label}
-                </button>
+                </Button>
               ))}
             </div>
           </div>

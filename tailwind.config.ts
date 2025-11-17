@@ -1,4 +1,6 @@
 import type { Config } from 'tailwindcss'
+import typography from '@tailwindcss/typography'
+import type { PluginAPI } from 'tailwindcss/types/config'
 
 const config: Config = {
   content: ['./index.html', './src/**/*.{ts,tsx,mdx}'],
@@ -27,9 +29,23 @@ const config: Config = {
         'grid-glow':
           'linear-gradient(120deg, rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(60deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
       },
+  typography: (theme: PluginAPI['theme']) => ({
+        invert: {
+          css: {
+            '--tw-prose-body': theme('colors.text-muted'),
+            '--tw-prose-headings': theme('colors.text-main'),
+            '--tw-prose-links': theme('colors.accent'),
+            '--tw-prose-bold': theme('colors.text-main'),
+            '--tw-prose-bullets': theme('colors.accent'),
+            '--tw-prose-hr': theme('colors.border'),
+            '--tw-prose-quotes': theme('colors.text-main'),
+            '--tw-prose-code': theme('colors.accent-soft'),
+          },
+        },
+      }),
     },
   },
-  plugins: [],
+  plugins: [typography],
 }
 
 export default config

@@ -5,6 +5,10 @@ import { profile } from '../data/profile'
 import { getHighlightedPapers, papers } from '../data/papers'
 import { projects } from '../data/projects'
 import { cardHover, cardTransition } from '../lib/motion'
+import { buttonVariants } from '../components/ui/Button'
+import { cardBaseClass } from '../components/ui/Card'
+import Tag from '../components/ui/Tag'
+import { cn } from '../lib/utils'
 
 const featuredPapers = getHighlightedPapers().slice(0, 3)
 const playgroundPreview = projects.slice(0, 3)
@@ -73,15 +77,12 @@ function Home() {
             </p>
           </div>
           <div className="flex flex-wrap gap-4">
-            <Link
-              to="/research"
-              className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-bg transition hover:bg-primary-soft"
-            >
+            <Link to="/research" className={buttonVariants({ variant: 'primary', size: 'lg' })}>
               View Research
             </Link>
             <Link
               to="/blog"
-              className="rounded-full border border-border px-6 py-3 text-sm font-semibold text-text-main hover:border-accent hover:text-accent"
+              className={buttonVariants({ variant: 'ghost', size: 'lg' })}
             >
               Visit Blog
             </Link>
@@ -106,7 +107,10 @@ function Home() {
             <MotionLink
               key={item.title}
               to={item.path}
-              className="group rounded-2xl border border-border/30 bg-bg-alt/60 p-6 transition hover:border-accent/60"
+              className={cn(
+                cardBaseClass({ variant: 'glass', padding: 'lg' }),
+                'group hover:border-accent/60'
+              )}
               variants={cardHover}
               initial="rest"
               whileHover="hover"
@@ -140,7 +144,10 @@ function Home() {
           {recentActivity.map((activity) => (
             <motion.div
               key={`${activity.date}-${activity.title}`}
-              className="flex flex-col gap-2 rounded-2xl border border-border/30 bg-bg/60 p-4 md:flex-row md:items-center md:justify-between"
+              className={cn(
+                cardBaseClass({ variant: 'default', padding: 'md' }),
+                'flex flex-col gap-2 md:flex-row md:items-center md:justify-between'
+              )}
               variants={cardHover}
               initial="rest"
               whileHover="hover"
@@ -151,9 +158,9 @@ function Home() {
                 <p className="text-lg font-semibold text-text-main">{activity.title}</p>
               </div>
               <div className="flex items-center gap-4 text-sm text-text-muted">
-                <span className="rounded-full border border-border px-3 py-1 text-text-main">
+                <Tag tone="outline" size="sm">
                   {activity.type}
-                </span>
+                </Tag>
                 <span>{activity.status}</span>
               </div>
             </motion.div>

@@ -2,6 +2,9 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import type { PostMeta } from '../../lib/mdx'
 import { cardHover, cardTransition } from '../../lib/motion'
+import { cardBaseClass } from '../ui/Card'
+import Tag from '../ui/Tag'
+import { cn } from '../../lib/utils'
 
 interface PostCardProps {
   post: PostMeta
@@ -21,7 +24,10 @@ function PostCard({ post }: PostCardProps) {
   return (
     <MotionLink
       to={`/blog/${post.slug}`}
-      className="flex flex-col gap-3 rounded-2xl border border-border/30 bg-bg/70 p-5 transition hover:border-accent/50"
+      className={cn(
+        cardBaseClass({ variant: 'default', padding: 'md' }),
+        'flex flex-col gap-3 hover:border-accent/50'
+      )}
       variants={cardHover}
       initial="rest"
       whileHover="hover"
@@ -36,14 +42,14 @@ function PostCard({ post }: PostCardProps) {
             {post.type === 'link' && <span className="text-xs text-accent">↗</span>}
           </h3>
         </div>
-        <div className="flex flex-wrap gap-2 text-xs uppercase tracking-[0.3em] text-text-muted">
-          <span className="rounded-full border border-border px-3 py-1 text-text-main">
+        <div className="flex flex-wrap gap-2 text-xs text-text-muted">
+          <Tag tone="accent" size="sm">
             {post.type}
-          </span>
+          </Tag>
           {post.tags.map((tag) => (
-            <span key={tag} className="rounded-full border border-border px-2 py-1 lowercase">
+            <Tag key={tag} tone="outline" size="sm">
               {tag}
-            </span>
+            </Tag>
           ))}
         </div>
       </div>

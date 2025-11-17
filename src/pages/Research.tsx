@@ -4,6 +4,9 @@ import { getHighlightedPapers, groupPapersByYear } from '../data/papers'
 import { projects } from '../data/projects'
 import { motion } from 'framer-motion'
 import { cardHover, cardTransition } from '../lib/motion'
+import Tag from '../components/ui/Tag'
+import { cardBaseClass } from '../components/ui/Card'
+import { cn } from '../lib/utils'
 
 const highlightedPapers = getHighlightedPapers()
 const publicationsByYear = groupPapersByYear()
@@ -36,7 +39,7 @@ function Research() {
           {highlightedPapers.map((paper) => (
             <motion.article
               key={paper.id}
-              className="rounded-2xl border border-border/30 bg-bg-alt/50 p-4 space-y-3"
+              className={cn(cardBaseClass({ variant: 'glass', padding: 'md' }), 'space-y-3')}
               variants={cardHover}
               initial="rest"
               whileHover="hover"
@@ -50,9 +53,9 @@ function Research() {
               {paper.summary && <p className="text-sm text-text-muted">{paper.summary}</p>}
               <div className="flex flex-wrap gap-2 text-xs text-text-muted">
                 {paper.tags.map((tag) => (
-                  <span key={tag} className="rounded-full border border-border/40 px-2 py-1">
+                  <Tag key={tag} tone="outline" size="sm">
                     {tag}
-                  </span>
+                  </Tag>
                 ))}
               </div>
             </motion.article>
@@ -73,7 +76,10 @@ function Research() {
                 {group.entries.map((paper) => (
                   <motion.li
                     key={paper.id}
-                    className="flex flex-col gap-1 rounded-2xl border border-border/20 bg-bg/40 p-3 md:flex-row md:items-center md:justify-between"
+                    className={cn(
+                      cardBaseClass({ variant: 'bordered', padding: 'sm' }),
+                      'flex flex-col gap-1 bg-bg/40 md:flex-row md:items-center md:justify-between'
+                    )}
                     variants={cardHover}
                     initial="rest"
                     whileHover="hover"
@@ -88,9 +94,9 @@ function Research() {
                     </div>
                     <div className="flex flex-wrap gap-2 text-xs text-text-muted">
                       {paper.tags.slice(0, 2).map((tag) => (
-                        <span key={`${paper.id}-${tag}`} className="rounded-full border border-border/30 px-2 py-1">
+                        <Tag key={`${paper.id}-${tag}`} tone="outline" size="sm">
                           {tag}
-                        </span>
+                        </Tag>
                       ))}
                     </div>
                   </motion.li>
@@ -110,7 +116,7 @@ function Research() {
           {upcomingProjects.map((project) => (
             <motion.article
               key={project.id}
-              className="rounded-2xl border border-border/30 bg-bg/60 p-5 space-y-3"
+              className={cn(cardBaseClass({ variant: 'default', padding: 'lg' }), 'space-y-3')}
               variants={cardHover}
               initial="rest"
               whileHover="hover"
@@ -126,9 +132,9 @@ function Research() {
               </div>
               <div className="flex flex-wrap gap-2 text-xs text-text-muted">
                 {(project.tags ?? []).map((tag) => (
-                  <span key={`${project.id}-${tag}`} className="rounded-full border border-border/30 px-2 py-1">
+                  <Tag key={`${project.id}-${tag}`} tone="outline" size="sm">
                     {tag}
-                  </span>
+                  </Tag>
                 ))}
               </div>
             </motion.article>
