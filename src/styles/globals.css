@@ -5,6 +5,34 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --color-bg: 245 247 251;
+    --color-bg-alt: 255 255 255;
+    --color-primary: 79 70 229;
+    --color-primary-soft: 129 140 248;
+    --color-accent: 14 165 133;
+    --color-accent-soft: 45 212 191;
+    --color-text-main: 15 23 42;
+    --color-text-muted: 71 85 105;
+    --color-border: 15 23 42;
+    --body-gradient: radial-gradient(circle at 20% 0%, rgba(129, 140, 248, 0.15), transparent 45%),
+      radial-gradient(circle at 80% 0%, rgba(45, 212, 191, 0.18), transparent 35%);
+  }
+
+  :root.dark {
+    --color-bg: 15 17 23;
+    --color-bg-alt: 24 27 35;
+    --color-primary: 124 123 255;
+    --color-primary-soft: 157 156 251;
+    --color-accent: 93 228 199;
+    --color-accent-soft: 160 255 230;
+    --color-text-main: 226 232 240;
+    --color-text-muted: 148 163 184;
+    --color-border: 255 255 255;
+    --body-gradient: radial-gradient(circle at top, rgba(94, 234, 212, 0.12), transparent 45%),
+      radial-gradient(circle at 20% 20%, rgba(124, 123, 255, 0.18), transparent 35%);
+  }
+
   *, *::before, *::after {
     @apply box-border;
   }
@@ -15,8 +43,7 @@
 
   body {
     @apply bg-bg text-text-main font-sans antialiased min-h-screen;
-    background-image: radial-gradient(circle at top, rgba(94,234,212,0.08), transparent 45%),
-      radial-gradient(circle at 20% 20%, rgba(124,123,255,0.12), transparent 35%);
+    background-image: var(--body-gradient);
   }
 
   a {
@@ -43,7 +70,7 @@
 
 @layer components {
   .app-shell {
-    @apply min-h-screen flex flex-col bg-transparent;
+    @apply relative min-h-screen flex flex-col bg-transparent overflow-hidden isolate;
   }
 
   .page-wrapper {
@@ -58,6 +85,7 @@
 @layer utilities {
   .text-gradient {
     background: linear-gradient(120deg, #9d9cfb, #5de4c7);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }

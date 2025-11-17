@@ -2,21 +2,30 @@ import type { Config } from 'tailwindcss'
 import typography from '@tailwindcss/typography'
 import type { PluginAPI } from 'tailwindcss/types/config'
 
+const withOpacityValue = (variable: string) => {
+  return (({ opacityValue }: { opacityValue?: string }) => {
+    if (opacityValue === undefined) {
+      return `rgb(var(${variable}) / 1)`
+    }
+    return `rgb(var(${variable}) / ${opacityValue})`
+  }) as unknown as string
+}
+
 const config: Config = {
   content: ['./index.html', './src/**/*.{ts,tsx,mdx}'],
   darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        bg: '#0f1117',
-        'bg-alt': '#181b23',
-        primary: '#7c7bff',
-        'primary-soft': '#9d9cfb',
-        accent: '#5de4c7',
-        'accent-soft': '#a0ffe6',
-        'text-main': '#e2e8f0',
-        'text-muted': '#94a3b8',
-        border: 'rgba(255,255,255,0.08)',
+        bg: withOpacityValue('--color-bg'),
+        'bg-alt': withOpacityValue('--color-bg-alt'),
+        primary: withOpacityValue('--color-primary'),
+        'primary-soft': withOpacityValue('--color-primary-soft'),
+        accent: withOpacityValue('--color-accent'),
+        'accent-soft': withOpacityValue('--color-accent-soft'),
+        'text-main': withOpacityValue('--color-text-main'),
+        'text-muted': withOpacityValue('--color-text-muted'),
+        border: withOpacityValue('--color-border'),
       },
       fontFamily: {
         sans: ['"Space Grotesk"', 'Inter', 'system-ui', 'sans-serif'],
@@ -29,7 +38,7 @@ const config: Config = {
         'grid-glow':
           'linear-gradient(120deg, rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(60deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
       },
-  typography: (theme: PluginAPI['theme']) => ({
+      typography: (theme: PluginAPI['theme']) => ({
         invert: {
           css: {
             '--tw-prose-body': theme('colors.text-muted'),

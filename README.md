@@ -24,8 +24,10 @@ The dev server runs at `http://localhost:5173`. Tailwind classes are available i
 ## Styling system
 
 - Color tokens: `primary`, `primary-soft`, `accent`, `accent-soft`, `bg`, `bg-alt`, `text-main`, `text-muted`, and `border` are defined in `tailwind.config.ts` for consistent usage.
+- Color tokens now live in CSS variables, so the palette swaps instantly when the navbar theme toggle flips between light and dark modes.
 - Typography: Space Grotesk (sans) and JetBrains Mono (mono) are loaded globally in `src/styles/globals.css`.
 - Utility helpers: `.app-shell`, `.page-wrapper`, `.glass-panel`, and `.text-gradient` provide quick layout primitives while keeping markup lean.
+- Layout ships with an animated polygon mesh background that reacts subtly to pointer movement for extra depth.
 
 ## Directory map (snapshot)
 
@@ -72,6 +74,7 @@ Upcoming steps will add `/components/ui` polish, `/components/content` expansion
 - Routing uses `HashRouter` to keep GitHub Pages refreshes from 404ing. Routes are declared in `src/router/index.tsx` and include `/`, `/research`, `/blog`, `/blog/:slug`, `/about`, `/playground`, and `/playground/snake` for the dedicated mini arcade.
 - `Layout.tsx` wraps every route via a parent `<Route element={<Layout />}>`. It renders `Navbar`, a spacious content container (`Outlet`), and `Footer`.
 - `Navbar` defines internal links with `NavLink`, highlighting the active route using Tailwind tokens.
+- A floating icon button in the navbar toggles light/dark themes (with persistence) by updating the CSS variable set on `<html>`.
 - Home, Research, and About now render live data from the shared `data/` directory so content changes stay centralized.
 - Blog pulls real MDX content through `lib/mdx.ts`, including tag/type filters and slugged detail views.
 

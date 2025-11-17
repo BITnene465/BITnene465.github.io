@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import ThemeToggle from './ThemeToggle'
 
 const navItems = [
   { label: 'Home', path: '/' },
@@ -25,17 +26,20 @@ function Navbar() {
             <p className="text-lg font-semibold text-text-main">BITnene465</p>
           </div>
         </div>
-        <nav className="flex flex-wrap items-center gap-4">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) => `${baseClass} ${isActive ? activeClass : ''}`}
-            >
-              {item.label}
-            </NavLink>
-          ))}
-        </nav>
+        <div className="flex flex-wrap items-center gap-4">
+          <nav className="flex flex-wrap items-center gap-4">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                className={({ isActive }) => `${baseClass} ${isActive ? activeClass : ''}`}
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   )
