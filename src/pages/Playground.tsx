@@ -1,4 +1,6 @@
 import Section from '../components/ui/Section'
+import { motion } from 'framer-motion'
+import { cardHover, cardTransition } from '../lib/motion'
 
 const animeAndGames = [
   { title: 'Frieren: Beyond Journey’s End', note: 'Meditative pacing, beautiful palettes.' },
@@ -24,10 +26,17 @@ function Playground() {
       >
         <ul className="space-y-3 text-sm text-text-muted">
           {animeAndGames.map((item) => (
-            <li key={item.title} className="flex flex-col gap-1 rounded-2xl border border-border/30 bg-bg/60 p-4">
+            <motion.li
+              key={item.title}
+              className="flex flex-col gap-1 rounded-2xl border border-border/30 bg-bg/60 p-4"
+              variants={cardHover}
+              initial="rest"
+              whileHover="hover"
+              transition={cardTransition}
+            >
               <span className="text-text-main font-semibold">{item.title}</span>
               <span>{item.note}</span>
-            </li>
+            </motion.li>
           ))}
         </ul>
       </Section>
@@ -39,10 +48,17 @@ function Playground() {
       >
         <div className="grid gap-4 md:grid-cols-3">
           {experiments.map((experiment) => (
-            <div key={experiment.name} className="rounded-2xl border border-border/30 bg-bg-alt/60 p-4">
+            <motion.div
+              key={experiment.name}
+              className="rounded-2xl border border-border/30 bg-bg-alt/60 p-4"
+              variants={cardHover}
+              initial="rest"
+              whileHover="hover"
+              transition={cardTransition}
+            >
               <h3 className="text-lg font-semibold text-text-main">{experiment.name}</h3>
               <p className="mt-2 text-sm text-text-muted">{experiment.description}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </Section>
@@ -54,9 +70,16 @@ function Playground() {
       >
         <div className="flex flex-wrap gap-3">
           {tools.map((tool) => (
-            <span key={tool} className="rounded-full border border-border/40 px-4 py-2 text-sm text-text-main">
+            <motion.span
+              key={tool}
+              className="rounded-full border border-border/40 px-4 py-2 text-sm text-text-main"
+              variants={cardHover}
+              initial="rest"
+              whileHover="hover"
+              transition={cardTransition}
+            >
               {tool}
-            </span>
+            </motion.span>
           ))}
         </div>
       </Section>

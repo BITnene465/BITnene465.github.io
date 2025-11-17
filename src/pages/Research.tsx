@@ -2,6 +2,8 @@ import Section from '../components/ui/Section'
 import { profile } from '../data/profile'
 import { getHighlightedPapers, groupPapersByYear } from '../data/papers'
 import { projects } from '../data/projects'
+import { motion } from 'framer-motion'
+import { cardHover, cardTransition } from '../lib/motion'
 
 const highlightedPapers = getHighlightedPapers()
 const publicationsByYear = groupPapersByYear()
@@ -32,7 +34,14 @@ function Research() {
       >
         <div className="grid gap-4 md:grid-cols-3">
           {highlightedPapers.map((paper) => (
-            <article key={paper.id} className="rounded-2xl border border-border/30 bg-bg-alt/50 p-4 space-y-3">
+            <motion.article
+              key={paper.id}
+              className="rounded-2xl border border-border/30 bg-bg-alt/50 p-4 space-y-3"
+              variants={cardHover}
+              initial="rest"
+              whileHover="hover"
+              transition={cardTransition}
+            >
               <p className="text-xs uppercase tracking-[0.4em] text-primary/70">{paper.venue}</p>
               <div>
                 <h3 className="text-lg font-semibold text-text-main">{paper.title}</h3>
@@ -46,7 +55,7 @@ function Research() {
                   </span>
                 ))}
               </div>
-            </article>
+            </motion.article>
           ))}
         </div>
       </Section>
@@ -62,7 +71,14 @@ function Research() {
               <h3 className="text-lg font-semibold text-text-main">{group.year}</h3>
               <ul className="space-y-2 text-sm text-text-muted">
                 {group.entries.map((paper) => (
-                  <li key={paper.id} className="flex flex-col gap-1 rounded-2xl border border-border/20 bg-bg/40 p-3 md:flex-row md:items-center md:justify-between">
+                  <motion.li
+                    key={paper.id}
+                    className="flex flex-col gap-1 rounded-2xl border border-border/20 bg-bg/40 p-3 md:flex-row md:items-center md:justify-between"
+                    variants={cardHover}
+                    initial="rest"
+                    whileHover="hover"
+                    transition={cardTransition}
+                  >
                     <span className="text-accent">◆</span>
                     <div className="flex-1 md:ml-2">
                       <p className="text-text-main font-semibold">{paper.title}</p>
@@ -77,7 +93,7 @@ function Research() {
                         </span>
                       ))}
                     </div>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
             </div>
@@ -92,7 +108,14 @@ function Research() {
       >
         <div className="grid gap-4 md:grid-cols-3">
           {upcomingProjects.map((project) => (
-            <article key={project.id} className="rounded-2xl border border-border/30 bg-bg/60 p-5 space-y-3">
+            <motion.article
+              key={project.id}
+              className="rounded-2xl border border-border/30 bg-bg/60 p-5 space-y-3"
+              variants={cardHover}
+              initial="rest"
+              whileHover="hover"
+              transition={cardTransition}
+            >
               <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-text-muted">
                 <span>{project.role ?? 'Contributor'}</span>
                 <span>{project.period ?? 'ongoing'}</span>
@@ -108,7 +131,7 @@ function Research() {
                   </span>
                 ))}
               </div>
-            </article>
+            </motion.article>
           ))}
         </div>
       </Section>

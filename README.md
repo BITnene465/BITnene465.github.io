@@ -2,7 +2,7 @@
 
 This repository powers a personal academic website that combines a research portfolio, MDX-powered blog, and playful playground experiments. The stack is Vite + React + TypeScript with HashRouter, Tailwind CSS, and Framer Motion for subtle motion cues.
 
-> ✅ Step 5 complete: MDX posts, lib/mdx.ts, and the Blog list/detail views now run end-to-end.
+> ✅ Step 6 complete: Framer Motion drives page transitions and card hover interactions.
 
 ## Tech stack
 
@@ -57,6 +57,7 @@ src/
     profile.ts        # Profile interface + global bio/value data
   lib/
     mdx.ts            # import.meta.glob loader + helpers
+    motion.ts         # Framer Motion variants shared across the app
   posts/
     *.mdx             # MDX sources with frontmatter
   styles/
@@ -90,6 +91,7 @@ Upcoming steps will add `/components/ui` polish, `/components/content` expansion
 - `src/data/projects.ts` exposes the `Project` interface and `projects` array. Research and Home cards pull titles, roles, and tags straight from here.
 - `src/data/profile.ts` keeps `Profile` metadata (bio, timeline, values, contacts). Home and About import it for hero copy, research areas, and external links.
 - `src/lib/mdx.ts` collects every MDX module via `import.meta.glob`, normalizes the slug/date metadata, and exposes helpers (`getAllPosts`, `getPostBySlug`, `getAllTags`).
+- `src/lib/motion.ts` centralizes animation variants/transitions like `pageTransition` and `cardHover` so Layout, PostCard, and other components share the same feel.
 - When adding new entries, keep IDs unique and prefer ISO strings for dates/periods so later filters can sort reliably.
 
 ## Authoring blog posts
@@ -112,6 +114,12 @@ Upcoming steps will add `/components/ui` polish, `/components/content` expansion
 4. `lib/mdx.ts` auto-discovers the file, so the Blog list and detail pages update instantly.
 5. Commit + push; GitHub Actions will redeploy `main` to `<username>.github.io` automatically.
 
+## Motion system
+
+- `Layout` wraps the routed pages with `AnimatePresence` + `pageTransition` for subtle fade/slide transitions.
+- Interactive cards (Home quick links, Research highlights, Blog PostCard, Playground lists, etc.) reuse `cardHover`/`cardTransition` for consistent lift + shadow behavior.
+- Extend `lib/motion.ts` with new presets (e.g., `fadeIn`, `staggerChildren`) and consume them via `framer-motion`'s `motion.*` helpers to keep animations declarative.
+
 ## Roadmap / implementation steps
 
 1. ✅ Tailwind + global styles
@@ -119,7 +127,7 @@ Upcoming steps will add `/components/ui` polish, `/components/content` expansion
 3. ✅ Home/Research/Blog/About/Playground scaffolding
 4. ✅ Data layer (papers, projects, profile)
 5. ✅ MDX pipeline + blog
-6. Framer Motion transitions
+6. ✅ Framer Motion transitions
 7. UI polish (buttons, cards, typography)
 8. Playground & blog content enrichments
 

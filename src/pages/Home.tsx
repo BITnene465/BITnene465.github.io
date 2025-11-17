@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import Section from '../components/ui/Section'
 import { profile } from '../data/profile'
 import { getHighlightedPapers, papers } from '../data/papers'
 import { projects } from '../data/projects'
+import { cardHover, cardTransition } from '../lib/motion'
 
 const featuredPapers = getHighlightedPapers().slice(0, 3)
 const playgroundPreview = projects.slice(0, 3)
@@ -27,6 +29,8 @@ const quickLinks = [
     items: playgroundPreview.map((project) => project.name),
   },
 ]
+
+const MotionLink = motion(Link)
 
 type Activity = {
   date: string
@@ -99,10 +103,15 @@ function Home() {
       >
         <div className="grid gap-6 md:grid-cols-3">
           {quickLinks.map((item) => (
-            <Link
+            <MotionLink
               key={item.title}
               to={item.path}
               className="group rounded-2xl border border-border/30 bg-bg-alt/60 p-6 transition hover:border-accent/60"
+              variants={cardHover}
+              initial="rest"
+              whileHover="hover"
+              whileTap="hover"
+              transition={cardTransition}
             >
               <div className="flex items-center justify-between">
                 <h3 className="text-xl font-semibold text-text-main">{item.title}</h3>
@@ -117,7 +126,7 @@ function Home() {
                   </li>
                 ))}
               </ul>
-            </Link>
+            </MotionLink>
           ))}
         </div>
       </Section>
@@ -129,9 +138,13 @@ function Home() {
       >
         <div className="space-y-4">
           {recentActivity.map((activity) => (
-            <div
+            <motion.div
               key={`${activity.date}-${activity.title}`}
               className="flex flex-col gap-2 rounded-2xl border border-border/30 bg-bg/60 p-4 md:flex-row md:items-center md:justify-between"
+              variants={cardHover}
+              initial="rest"
+              whileHover="hover"
+              transition={cardTransition}
             >
               <div>
                 <p className="text-sm text-text-muted">{activity.date}</p>
@@ -143,7 +156,7 @@ function Home() {
                 </span>
                 <span>{activity.status}</span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </Section>

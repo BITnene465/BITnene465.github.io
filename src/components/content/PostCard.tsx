@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import type { PostMeta } from '../../lib/mdx'
+import { cardHover, cardTransition } from '../../lib/motion'
 
 interface PostCardProps {
   post: PostMeta
@@ -13,11 +15,18 @@ function formatDate(date: string) {
   })
 }
 
+const MotionLink = motion(Link)
+
 function PostCard({ post }: PostCardProps) {
   return (
-    <Link
+    <MotionLink
       to={`/blog/${post.slug}`}
       className="flex flex-col gap-3 rounded-2xl border border-border/30 bg-bg/70 p-5 transition hover:border-accent/50"
+      variants={cardHover}
+      initial="rest"
+      whileHover="hover"
+      whileTap="hover"
+      transition={cardTransition}
     >
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
@@ -39,7 +48,7 @@ function PostCard({ post }: PostCardProps) {
         </div>
       </div>
       {post.summary && <p className="text-sm text-text-muted">{post.summary}</p>}
-    </Link>
+    </MotionLink>
   )
 }
 
