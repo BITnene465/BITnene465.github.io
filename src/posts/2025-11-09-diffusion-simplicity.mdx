@@ -1,0 +1,22 @@
+---
+title: "Diffusion Simplicity Notes"
+date: "2025-11-09"
+tags: ["research", "note", "diffusion"]
+type: "article"
+summary: "Thinking through minimal control stacks for live diffusion demos."
+---
+
+## Why simplicity matters
+
+The Playground demos lean on tiny diffusion checkpoints so I can explain each knob live. The
+current prototype focuses on:
+
+- **One latent edit** at a time so we can trace gradients without screen clutter.
+- **Graph hooks** that mirror the research pipeline from the main papers.
+- **Playable presets** that map directly to the HoloBoard retrospective UI.
+
+## What still needs work
+
+1. Record better latency numbers on consumer GPUs.
+2. Translate the best presets into MDX shortcodes so blog posts can embed the same widgets.
+3. Borrow the anime-inspired UI framing from CelShade to keep the visuals coherent.

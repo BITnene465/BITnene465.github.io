@@ -2,7 +2,7 @@
 
 This repository powers a personal academic website that combines a research portfolio, MDX-powered blog, and playful playground experiments. The stack is Vite + React + TypeScript with HashRouter, Tailwind CSS, and Framer Motion for subtle motion cues.
 
-> ✅ Step 4 complete: Papers, projects, and the profile data layer now drive Home, Research, and About.
+> ✅ Step 5 complete: MDX posts, lib/mdx.ts, and the Blog list/detail views now run end-to-end.
 
 ## Tech stack
 
@@ -10,7 +10,7 @@ This repository powers a personal academic website that combines a research port
 - React Router v6 (HashRouter) for GitHub Pages friendly routing
 - Tailwind CSS with bespoke color tokens and Glassmorphism-friendly utilities
 - Framer Motion (added in a later step) for page and card transitions
-- MDX (coming soon) for authoring blog posts with frontmatter metadata
+- MDX + import.meta.glob pipeline for authoring blog posts with frontmatter metadata
 
 ## Getting started
 
@@ -42,6 +42,8 @@ src/
       Footer.tsx       # deployment + ownership blurb
     ui/
       Section.tsx      # shared section shell
+    content/
+      PostCard.tsx     # reusable blog preview card
   pages/
     Home.tsx
     Research.tsx
@@ -53,11 +55,15 @@ src/
     papers.ts         # Paper interface + sample records
     projects.ts       # Project interface + sample records
     profile.ts        # Profile interface + global bio/value data
+  lib/
+    mdx.ts            # import.meta.glob loader + helpers
+  posts/
+    *.mdx             # MDX sources with frontmatter
   styles/
     globals.css        # Tailwind directives + global tokens and helpers
 ```
 
-Upcoming steps will add `/components/content`, `/lib`, and `/posts`.
+Upcoming steps will add `/components/ui` polish, `/components/content` expansions, and motion presets.
 
 ## Routing & layout skeleton
 
@@ -65,6 +71,7 @@ Upcoming steps will add `/components/content`, `/lib`, and `/posts`.
 - `Layout.tsx` wraps every route via a parent `<Route element={<Layout />}>`. It renders `Navbar`, a spacious content container (`Outlet`), and `Footer`.
 - `Navbar` defines internal links with `NavLink`, highlighting the active route using Tailwind tokens.
 - Home, Research, and About now render live data from the shared `data/` directory so content changes stay centralized.
+- Blog pulls real MDX content through `lib/mdx.ts`, including tag/type filters and slugged detail views.
 
 ## Section scaffolding
 
@@ -72,7 +79,7 @@ Upcoming steps will add `/components/content`, `/lib`, and `/posts`.
 - Pages now follow the expected information architecture:
   - **Home**: hero block, quick links, recent activity timeline placeholders.
   - **Research**: overview copy, highlighted papers, yearly publications, and project tiles.
-  - **Blog**: intro copy, tag/type filters, post list placeholders.
+  - **Blog**: intro copy, dynamic tag/type filters, and MDX-backed post cards.
   - **About**: profile narrative, timeline, values, and external links.
   - **Playground**: anime/game shelf, experiments grid, and tools cloud.
 - These stubs are now wired to the data layer, so refreshing the JSON-like files updates the UI without touching layout code.
@@ -82,11 +89,10 @@ Upcoming steps will add `/components/content`, `/lib`, and `/posts`.
 - `src/data/papers.ts` defines the `Paper` interface, an initial `papers` array, and helpers `getHighlightedPapers()` + `groupPapersByYear()` used across Home/Research.
 - `src/data/projects.ts` exposes the `Project` interface and `projects` array. Research and Home cards pull titles, roles, and tags straight from here.
 - `src/data/profile.ts` keeps `Profile` metadata (bio, timeline, values, contacts). Home and About import it for hero copy, research areas, and external links.
+- `src/lib/mdx.ts` collects every MDX module via `import.meta.glob`, normalizes the slug/date metadata, and exposes helpers (`getAllPosts`, `getPostBySlug`, `getAllTags`).
 - When adding new entries, keep IDs unique and prefer ISO strings for dates/periods so later filters can sort reliably.
 
-## Authoring blog posts (preview)
-
-The blog system lands in Step 5. The workflow is:
+## Authoring blog posts
 
 1. Create an MDX file under `src/posts/YYYY-MM-DD-slug.mdx`.
 2. Fill out the frontmatter:
@@ -102,8 +108,9 @@ The blog system lands in Step 5. The workflow is:
    ---
    ```
 
-3. Write MDX content using React components as needed.
-4. Commit + push; GitHub Actions will redeploy `main` to `<username>.github.io` automatically.
+3. Write MDX content using standard markdown/React components.
+4. `lib/mdx.ts` auto-discovers the file, so the Blog list and detail pages update instantly.
+5. Commit + push; GitHub Actions will redeploy `main` to `<username>.github.io` automatically.
 
 ## Roadmap / implementation steps
 
@@ -111,7 +118,7 @@ The blog system lands in Step 5. The workflow is:
 2. ✅ Router + layout skeleton
 3. ✅ Home/Research/Blog/About/Playground scaffolding
 4. ✅ Data layer (papers, projects, profile)
-5. MDX pipeline + blog
+5. ✅ MDX pipeline + blog
 6. Framer Motion transitions
 7. UI polish (buttons, cards, typography)
 8. Playground & blog content enrichments
