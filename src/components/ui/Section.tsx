@@ -23,8 +23,12 @@ function Section({ eyebrow, title, description, actions, children }: SectionProp
         </div>
         {actions && <div className="shrink-0">{actions}</div>}
       </div>
-      <div className="rounded-3xl border border-border/30 bg-white/5 backdrop-blur px-6 py-8 shadow-soft/40">
-        {children}
+      <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-white/10 px-6 py-8 text-text-main shadow-[0_25px_80px_rgba(4,6,15,0.4)] backdrop-blur-2xl dark:bg-white/5">
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/15 via-transparent to-primary/20 opacity-70"
+          aria-hidden
+        />
+        <div className="relative z-10">{children}</div>
       </div>
     </section>
   )

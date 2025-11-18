@@ -64,8 +64,13 @@ const recentActivity: Activity[] = [
 function Home() {
   return (
     <div className="space-y-12">
-      <section className="grid gap-8 rounded-[32px] border border-border/40 bg-gradient-to-br from-bg via-bg-alt to-bg p-10 shadow-soft lg:grid-cols-2">
-        <div className="space-y-6">
+      <section className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/5 shadow-soft/60 backdrop-blur-2xl">
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-primary/25 opacity-80"
+          aria-hidden
+        />
+        <div className="relative grid gap-8 p-10 lg:grid-cols-2">
+          <div className="space-y-6">
           <p className="text-xs uppercase tracking-[0.5em] text-accent">home base</p>
           <div className="space-y-4">
             <h1 className="text-4xl font-semibold text-text-main">
@@ -87,11 +92,12 @@ function Home() {
               Visit Blog
             </Link>
           </div>
-        </div>
-        <div className="rounded-[24px] border border-border/30 bg-gradient-to-br from-primary/30 via-bg-alt to-accent/20 p-6">
-          <div className="h-full rounded-2xl border border-white/10 bg-grid-glow bg-[length:120px_120px] p-6">
-            <div className="h-full rounded-[20px] border border-white/20 bg-gradient-to-b from-white/10 to-transparent flex items-center justify-center text-center text-text-muted">
-              Future anime-style illustration slot
+          </div>
+          <div className="rounded-[24px] border border-white/20 bg-white/5 p-6 shadow-inner">
+            <div className="h-full rounded-2xl border border-white/10 bg-grid-glow bg-[length:120px_120px] p-6 backdrop-blur">
+              <div className="h-full rounded-[20px] border border-white/30 bg-gradient-to-b from-white/20 to-transparent flex items-center justify-center text-center text-text-muted">
+                Future anime-style illustration slot
+              </div>
             </div>
           </div>
         </div>

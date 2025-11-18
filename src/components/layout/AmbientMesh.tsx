@@ -30,14 +30,15 @@ function AmbientMesh() {
     const context = canvas?.getContext('2d')
     if (!canvas || !context) return
 
+    const doc = document.documentElement
     let width = window.innerWidth
-    let height = window.innerHeight
+    let height = Math.max(window.innerHeight, doc.scrollHeight)
     let animationFrameId: number
     const pointer: Point = { x: width / 2, y: height / 2 }
 
     const setCanvasSize = () => {
-      width = window.innerWidth
-      height = window.innerHeight
+      width = Math.max(window.innerWidth, doc.scrollWidth)
+      height = Math.max(window.innerHeight, doc.scrollHeight)
       const dpr = window.devicePixelRatio || 1
       canvas.width = width * dpr
       canvas.height = height * dpr
@@ -71,6 +72,10 @@ function AmbientMesh() {
       }
     }
 
+    const regeneratePolygons = () => {
+      polygons = Array.from({ length: POLYGON_COUNT }, () => createPolygon())
+    }
+
     let polygons = Array.from({ length: POLYGON_COUNT }, () => createPolygon())
 
     const handlePointerMove = (event: PointerEvent) => {
@@ -80,8 +85,16 @@ function AmbientMesh() {
 
     const handleResize = () => {
       setCanvasSize()
-      polygons = Array.from({ length: POLYGON_COUNT }, () => createPolygon())
+      regeneratePolygons()
     }
+
+    const bodyObserver = typeof ResizeObserver !== 'undefined'
+      ? new ResizeObserver(() => {
+          setCanvasSize()
+          regeneratePolygons()
+        })
+      : null
+    bodyObserver?.observe(document.body)
 
     const render = () => {
       context.clearRect(0, 0, width, height)
@@ -128,6 +141,7 @@ function AmbientMesh() {
     return () => {
       window.removeEventListener('pointermove', handlePointerMove)
       window.removeEventListener('resize', handleResize)
+      bodyObserver?.disconnect()
       window.cancelAnimationFrame(animationFrameId)
     }
   }, [theme])

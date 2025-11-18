@@ -5,7 +5,8 @@ export type CardVariant = 'default' | 'glass' | 'bordered'
 export type CardPadding = 'sm' | 'md' | 'lg'
 
 const variantClass: Record<CardVariant, string> = {
-  default: 'bg-bg/70 border border-border/30 shadow-soft/30',
+  default:
+    'bg-white/10 border border-white/15 text-text-main backdrop-blur-xl shadow-[0_25px_80px_rgba(4,6,15,0.35)] dark:bg-white/5 dark:border-white/10',
   glass: 'bg-white/5 border border-white/10 backdrop-blur shadow-soft/40',
   bordered: 'bg-transparent border border-border/40',
 }
